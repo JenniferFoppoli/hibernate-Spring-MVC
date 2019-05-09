@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.servicios.ServicioTp;
 
-public class ControladorTp {
 	@Controller
 
 	public class ControladorTp {
