@@ -6,12 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+
 
 @Controller
 public class ControladorLogin {
@@ -21,6 +23,7 @@ public class ControladorLogin {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioLogin servicioLogin;
+
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
@@ -67,4 +70,57 @@ public class ControladorLogin {
 	public ModelAndView inicio() {
 		return new ModelAndView("redirect:/login");
 	}
+	
+	//TP
+	
+			@RequestMapping(path = "/{operacion}/{cadena}",method = RequestMethod.GET)
+			public ModelAndView OperarConCadena (@PathVariable String operacion, @PathVariable String cadena)
+			{
+				
+				String cadenaResultado=null;
+				
+				
+				
+				switch(operacion) {
+				
+				  case "pasarAmayuscula":
+			
+					  cadenaResultado = cadena.toUpperCase();
+					  
+				    break;
+				    
+				  case "pasarAminuscula":
+					  cadenaResultado = cadena.toLowerCase();
+				
+				    break;
+				    
+				  case "invertirOrden":
+					  StringBuilder builder=new StringBuilder(cadena);
+					  cadenaResultado = builder.reverse().toString();
+					    break;
+				    
+				  case "cantidadDeCaracteres":
+					  
+					  cadenaResultado =String.valueOf( cadena.length());
+					  
+					  
+						
+					    break;
+				  default:
+			
+				}
+				
+				ModelMap model = new ModelMap();
+				
+				model.put("op", operacion);
+				model.put("c", cadena);
+				model.put("resultado", cadenaResultado);
+				
+				
+			
+				
+				return new ModelAndView("resultado",model);
+				
+
+			}
 }
